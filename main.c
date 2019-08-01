@@ -3,30 +3,38 @@
 #include <time.h>
 
 int main (int argc, char** argv) {
-	int nombreMystere = 0, nombreEntre = 0;
+	int mystery, input, count, max, min;
+	char again;
 	const int MAX = 100, MIN = 1;
+	srand(time(NULL));	// Initialisation of the seed
 
-	// Génération du nombre aléatoire
+	do {	// While user want to play again
 
-	srand(time(NULL));
-	nombreMystere = (rand() % (MAX - MIN + 1)) + MIN;
+		mystery = (rand() % (MAX - MIN + 1)) + MIN;	// Generation of the random number
+		count = 0;	// Initialisation of the number of trials
 
-	/* La boucle du programme. Elle se répète tant que l'utilisateur n'a pas trouvé le nombre mystère */
+		do {	// While user do not find the mysterious number
 
-	do {
-		// On demande le nombre
-		printf("Quel est le nombre ? ");
-		scanf("%d", &nombreEntre);
+			printf("Try a number ! ");	// Asking for the mysterious number
+			scanf("%d", &input);
 
-		// On compare le nombre entré avec le nombre mystère
+			count += 1;	// Incrementing the number of trials
 
-		if (nombreMystere > nombreEntre)
-			printf("C'est plus !\n\n");
-		else if (nombreMystere < nombreEntre)
-			printf("C'est moins !\n\n");
-		else
-			printf ("Bravo, vous avez trouve le nombre mystere !!!\n\n");
-	} while (nombreEntre != nombreMystere);
+			if (mystery > input)	// Tests between input number and mysterious number
+				printf("It is more !\n\n");
+			else if (mystery < input)
+				printf("It is less !\n\n");
+			else
+				printf ("Congratulation, you have found the mystery number in %d moves !!!\n\n", count);
+
+		} while (mystery != input);
+
+		do {	// Asking for a new game
+			printf("Do you want to play again ? (y/n) ");
+			scanf(" %c", &again);
+		} while (again != 'y' && again != 'n');
+
+	} while (again == 'y');
 
 	return 0;
 }
